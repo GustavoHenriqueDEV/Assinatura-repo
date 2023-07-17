@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="style.css">
+<script src="main.js"></script>
+
+
+<head>
+  <title>Assinatura Digital</title> 
+</head>
+<body >
+
+<div class="Content">
+
+  <div class="canvaContainer">
+    <canvas id="canvas" width="400" height="200"></canvas>
+  </div>
+  <div class="buttons">
+    <button onclick="limpar()">Limpar</button>
+    <button onclick="salvar()">Salvar</button>
+  </div>
+</div>
+</body>
+
+
+<script>
+
+
+
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  var desenhando = false;
+
+  canvas.addEventListener('mousedown', iniciarDesenho);
+  canvas.addEventListener('mousemove', desenhar);
+  canvas.addEventListener('mouseup', pararDesenho);
+  canvas.addEventListener('touchstart', iniciarDesenho);
+  canvas.addEventListener('touchmove', desenhar);
+  canvas.addEventListener('touchend', pararDesenho);
+
+  function iniciarDesenho(event) {
+    desenhando = true;
+    context.beginPath();
+    context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+    event.preventDefault();
+  }
+
+  function desenhar(event) {
+    if (desenhando) {
+      context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+      context.stroke();
+    }
+    event.preventDefault();
+  }
+
+  function pararDesenho(event) {
+    desenhando = false;
+    event.preventDefault();
+  }
+
+  function limpar() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function salvar() {
+    var dataURL = canvas.toDataURL();
+    console.log('Assinatura:', dataURL);
+
+    alert("Imagem salva", dataURL)
+    // Faça algo com a assinatura, como enviar para um servidor ou salvar localmente
+  }
+
+   // Enviar a imagem para o servidor utilizando AJAX
+  //  var xhttp = new XMLHttpRequest();
+  //   xhttp.onreadystatechange = function() {
+  //     if (this.readyState == 4 && this.status == 200) {
+  //       console.log(this.responseText);
+  //     }
+  //   };
+  //   xhttp.open("POST", "salvar_assinatura.php", true);
+  //   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  //   xhttp.send("image=" + encodeURIComponent(image));
+  // }
+
+
+</script>
+</html>

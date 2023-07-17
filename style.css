@@ -1,0 +1,74 @@
+
+body{
+    background: #bdc3c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+}
+
+#canvas {
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 20px;
+  }
+
+
+
+.canvaContainer{
+    display: flex;
+    justify-content: center;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.buttons{
+    margin-top: 10px;
+    gap: 10px   ;
+    justify-content: center;
+    display: flex;
+    
+    
+}
+
+button{
+
+
+  align-items: center;
+  background: #FFFFFF;
+  border: 0 solid #E2E8F0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  color: #1A202C;
+  display: inline-flex;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  height: 20px;
+  justify-content: center;
+  line-height: 24px;
+  overflow-wrap: break-word;
+  padding: 34px;
+  text-decoration: none;
+  width: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+
+}
+.Content{
+    
+  
+    margin-top: 10px;
+    }
+
+
+    /* CSS */
+    .button-47 {
+    
+    }
