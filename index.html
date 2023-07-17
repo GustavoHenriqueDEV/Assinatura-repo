@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="style.css">
-<script src="main.js"></script>
-
-
 <head>
   <title>Assinatura Digital</title> 
 </head>
-<body >
+<body>
 
 <div class="Content">
-
   <div class="canvaContainer">
     <canvas id="canvas" width="400" height="200"></canvas>
   </div>
@@ -23,52 +19,69 @@
 
 
 <script>
+document.body.style.overflow = "hidden";
 
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var desenhando = false;
 
+canvas.addEventListener('mousedown', iniciarDesenho);
+canvas.addEventListener('mousemove', desenhar);
+canvas.addEventListener('mouseup', pararDesenho);
+canvas.addEventListener('touchstart', iniciarDesenho);
+canvas.addEventListener('touchmove', desenhar);
+canvas.addEventListener('touchend', pararDesenho);
 
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-  var desenhando = false;
+function iniciarDesenho(event) {
+  desenhando = true;
+  var pos = getPosicao(event);
+  context.beginPath();
+  context.moveTo(pos.x, pos.y);
+  event.preventDefault();
+}
 
-  canvas.addEventListener('mousedown', iniciarDesenho);
-  canvas.addEventListener('mousemove', desenhar);
-  canvas.addEventListener('mouseup', pararDesenho);
-  canvas.addEventListener('touchstart', iniciarDesenho);
-  canvas.addEventListener('touchmove', desenhar);
-  canvas.addEventListener('touchend', pararDesenho);
+function desenhar(event) {
+  if (desenhando) {
+    var pos = getPosicao(event);
+    context.lineTo(pos.x, pos.y);
+    context.stroke();
+  }
+  event.preventDefault();
+}
 
-  function iniciarDesenho(event) {
-    desenhando = true;
-    context.beginPath();
-    context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
-    event.preventDefault();
+function pararDesenho(event) {
+  desenhando = false;
+  event.preventDefault();
+}
+
+function limpar() {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function salvar() {
+  var image = canvas.toDataURL();
+  console.log(image);
+  // Aqui você pode enviar a imagem para o servidor ou realizar outras ações.
+}
+
+function getPosicao(event) {
+  var pos = { x: 0, y: 0 };
+
+  if (event.type.indexOf('touch') !== -1) {
+    var touch = event.touches[0] || event.changedTouches[0];
+    pos.x = touch.clientX || touch.pageX;
+    pos.y = touch.clientY || touch.pageY;
+  } else {
+    pos.x = event.clientX || event.pageX;
+    pos.y = event.clientY || event.pageY;
   }
 
-  function desenhar(event) {
-    if (desenhando) {
-      context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
-      context.stroke();
-    }
-    event.preventDefault();
-  }
+  var canvasRect = canvas.getBoundingClientRect();
+  pos.x -= canvasRect.left;
+  pos.y -= canvasRect.top;
 
-  function pararDesenho(event) {
-    desenhando = false;
-    event.preventDefault();
-  }
-
-  function limpar() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-  }
-
-  function salvar() {
-    var dataURL = canvas.toDataURL();
-    console.log('Assinatura:', dataURL);
-
-    alert("Imagem salva", dataURL)
-    // Faça algo com a assinatura, como enviar para um servidor ou salvar localmente
-  }
-
+  return pos;
+}
    // Enviar a imagem para o servidor utilizando AJAX
   //  var xhttp = new XMLHttpRequest();
   //   xhttp.onreadystatechange = function() {
@@ -80,6 +93,9 @@
   //   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   //   xhttp.send("image=" + encodeURIComponent(image));
   // }
+
+
+
 
 
 </script>
